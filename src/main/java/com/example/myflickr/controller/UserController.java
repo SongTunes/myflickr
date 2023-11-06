@@ -20,8 +20,10 @@ public class UserController {
     @PostMapping("/login")
     public Result login(@RequestBody User user){
         // 后端User属性定义多没关系 保证前端传来的能接收有就行
+        User u = userService.login(user);
         System.out.println(user);
-        return Result.success();
+        return Result.success(u);  // 这里返回了u则说明验证一定通过了
+
     }
 
     @GetMapping("/all-user")
@@ -32,12 +34,11 @@ public class UserController {
     }
 
 
-    @PostMapping("/add")
+    @PostMapping("/signup")
     public Result insert(@RequestBody User user){
         // @RequestBody需要格式为JSON
         System.out.println(user);
-        int res = userService.insert(user);
-        if(res > 0) return Result.success(res);
-        return Result.error("insert error");
+        int res = userService.signup(user);
+        return Result.success(res);
     }
 }

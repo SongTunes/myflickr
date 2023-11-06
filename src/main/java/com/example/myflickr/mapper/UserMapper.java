@@ -16,9 +16,11 @@ public interface UserMapper {
     @Select("select * from user where name = #{name}")
     public User selectByName(String name);  // 如果返回多条会抛出异常 会终止运行吗?
 
-    @Insert("insert into user (name) values (#{name})")
+    @Insert("insert into user (name, password) values (#{name}, #{password})")
     public int insert(User user);
 
+    @Select("select * from user where name = #{name} and password = #{password}")
+    public User selectByNameAndPassword(String name, String password);
 
 
 //    @Insert("insert into aaa (id, name) values (#{id}, #{name})")
