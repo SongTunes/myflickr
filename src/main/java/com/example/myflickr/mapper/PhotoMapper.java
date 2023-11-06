@@ -8,6 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface PhotoMapper {
-    @Select("select * from photo")
+    @Select("select * from sch1.t_photo")
     public List<Photo> selectAll();
 }

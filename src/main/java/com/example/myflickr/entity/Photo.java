@@ -10,16 +10,40 @@ import javax.persistence.Id;
 public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
-    public String uid;
-//    public String cid;
-//    public String password;
+    private Integer id;
+    private Integer uid;
+    private Integer cid;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public Integer getCid() {
+        return cid;
+    }
+
+    public void setCid(Integer cid) {
+        this.cid = cid;
+    }
 
     @Override
     public String toString() {
         return "Photo{" +
                 "id=" + id +
-                ", uid='" + uid + '\'' +
+                ", uid=" + uid +
+                ", cid=" + cid +
                 '}';
     }
 }

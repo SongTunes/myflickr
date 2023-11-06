@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import javax.persistence.*;
 
-@TableName("user")
+@TableName("t_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +12,9 @@ public class User {
 //    @Column(name = "name")
     private String name;
     private String password;
+    private String gender;
+    private String birth;
+    private String role;
 
     @Transient
     private String token;
@@ -38,6 +41,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getToken() {
