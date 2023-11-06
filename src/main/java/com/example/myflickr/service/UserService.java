@@ -4,6 +4,7 @@ package com.example.myflickr.service;
 import com.example.myflickr.entity.User;
 import com.example.myflickr.exception.ServiceException;
 import com.example.myflickr.mapper.UserMapper;
+import com.example.myflickr.utils.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +27,12 @@ public class UserService {
         if (u == null){
             throw new ServiceException("用户名或密码错误");
         }
+        // 生成token 和user一起返回前端
+        String token = JwtTokenUtils.genToken(u.getId().toString(), u.getPassword());
+        u.setToken(token);
         return u;
     }
 
-
-
-    public List<User> selectAll(){
-        return userMapper.selectAll();
-    }
     public int signup(User user){
         if(user.getName() == null || "".equals(user.getName())){
             throw new ServiceException("用户名不可为空");
@@ -50,4 +49,13 @@ public class UserService {
 
         return userMapper.insert(user);
     }
+
+
+    public List<User> selectAll(){
+        return userMapper.selectAll();
+    }
+    public User selectById(Integer id){
+        return userMapper.selectById(id);
+    }
+
 }

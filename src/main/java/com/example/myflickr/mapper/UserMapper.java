@@ -13,6 +13,9 @@ public interface UserMapper {
     @Select("select * from user")
     public List<User> selectAll();
 
+    @Select("select * from user where id = #{id}")
+    public User selectById(Integer id);
+
     @Select("select * from user where name = #{name}")
     public User selectByName(String name);  // 如果返回多条会抛出异常 会终止运行吗?
 

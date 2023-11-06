@@ -2,17 +2,19 @@ package com.example.myflickr.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @TableName("user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+//    @Column(name = "name")
     private String name;
     private String password;
+
+    @Transient
+    private String token;
 
     public Integer getId() {
         return id;
@@ -36,6 +38,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
