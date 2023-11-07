@@ -2,8 +2,9 @@ package com.example.myflickr.controller;
 
 
 import com.example.myflickr.common.Result;
+import com.example.myflickr.entity.City;
 import com.example.myflickr.entity.Photo;
-import com.example.myflickr.mapper.PhotoMapper;
+import com.example.myflickr.service.CityService;
 import com.example.myflickr.service.PhotoService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,20 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/photo")
-public class PhotoController {
+@RequestMapping("/city")
+public class CityController {
     @Autowired
-    private PhotoService photoService;
+    private CityService cityService;
 
-    @GetMapping("/all-photo")
-    public Result getAllPhoto(){
-        PageInfo<Photo> photoData = photoService.getAllPhoto();
-        System.out.println(photoData);
-        return Result.success(photoData);
+    @GetMapping("/all-city")
+    public Result getAllCity(){
+        List<City> cityData = cityService.getAllCity();
+        return Result.success(cityData);
     }
 
+    @RequestMapping("/add")
+    public Result add(City city){
+        City c = cityService.add(city);
+        return Result.success(c);
+    }
 }

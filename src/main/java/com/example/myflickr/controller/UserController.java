@@ -41,17 +41,17 @@ public class UserController {
 
     @GetMapping("/all-user")
     public Result selectAll(){
-        List<User> userData = userService.selectAll();
+        List<User> userData = userService.getAllUser();
         System.out.println(userData);
         return Result.success(userData);
     }
 
     @PostMapping("/signup")
-    public Result insert(@RequestBody User user){
+    public Result signup(@RequestBody User user){
         // @RequestBody需要格式为JSON
         System.out.println(user);
-        int res = userService.signup(user);
-        return Result.success(res);
+        User u = userService.signup(user);
+        return Result.success(u);
     }
 
     @PostMapping("/upload")

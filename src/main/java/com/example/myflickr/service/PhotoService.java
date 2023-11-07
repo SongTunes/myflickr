@@ -20,7 +20,7 @@ public class PhotoService {
     @Autowired
     private PhotoMapper photoMapper;
 
-    public PageInfo<Photo> selectAll(){
+    public PageInfo<Photo> getAllPhoto(){
         // 开启分页查询
         PageHelper.startPage(1, 5);
         List<Photo> photos = photoMapper.selectAll();

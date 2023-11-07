@@ -1,5 +1,6 @@
 package com.example.myflickr.mapper;
 
+import com.example.myflickr.entity.City;
 import com.example.myflickr.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -26,7 +27,5 @@ public interface UserMapper {
     public User selectByNameAndPassword(String name, String password);
 
 
-//    @Insert("insert into aaa (id, name) values (#{id}, #{name})")
-//    public int insert(Info info);
     // @Params注解干啥的?
 }

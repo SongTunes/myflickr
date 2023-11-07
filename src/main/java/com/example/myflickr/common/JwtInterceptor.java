@@ -47,7 +47,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             throw new ServiceException("401", "token验证失败 请登录");
         }
         // 根据token中的userid查询数据库
-        User user = userService.selectById(Integer.valueOf(userId));
+        User user = userService.getUserById(Integer.valueOf(userId));
         if (user == null) {
             throw new ServiceException("401", "请登录");
         }

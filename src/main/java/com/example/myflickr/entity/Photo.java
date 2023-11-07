@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 
-@TableName("photo")
+@TableName("t_photo")
 public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

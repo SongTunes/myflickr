@@ -61,7 +61,7 @@ public class JwtTokenUtils {
 
             // 解析token 获取用户的id
             String uId = JWT.decode(token).getAudience().get(0);
-            return staticUserService.selectById(Integer.valueOf(uId));  // 这里是查数据库?
+            return staticUserService.getUserById(Integer.valueOf(uId));  // 这里是查数据库?
         } catch (Exception e) {
             log.error("获取当前登录的管理员信息失败, token: {}",token, e);
             return null;

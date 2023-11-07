@@ -46,7 +46,7 @@ public class UserService {
         return u;
     }
 
-    public int signup(User user){
+    public User signup(User user){
         if(user.getName() == null || "".equals(user.getName())){
             throw new ServiceException("用户名不可为空");
         }
@@ -62,8 +62,10 @@ public class UserService {
             // 任何项目都要有: 全局异常处理
             throw new ServiceException("用户名已存在");
         }
-
-        return userMapper.insert(user);
+        if(userMapper.insert(user) > 0){
+            return user;
+        }
+        return null;
     }
 
     public Photo upload(Boolean isPrivate, Integer uid, Integer cid, Date date, MultipartFile photoFile, HttpServletRequest request) {
@@ -112,10 +114,10 @@ public class UserService {
     }
 
 
-    public List<User> selectAll(){
+    public List<User> getAllUser(){
         return userMapper.selectAll();
     }
-    public User selectById(Integer id){
+    public User getUserById(Integer id){
         return userMapper.selectById(id);
     }
 
