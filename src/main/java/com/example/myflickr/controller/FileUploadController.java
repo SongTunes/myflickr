@@ -1,3 +1,6 @@
+/**
+ * TODO: 文件返回前端
+ */
 package com.example.myflickr.controller;
 
 import com.example.myflickr.common.Result;
@@ -13,12 +16,12 @@ import java.io.IOException;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/user")
 public class FileUploadController {
+
     @PostMapping("/upload")
     public Result uploadFile(String name, MultipartFile photo, HttpServletRequest request) throws IOException {
 //        String dir = request.getServletContext().getRealPath("/upload/");
-        String dir = "/home/myflickr/";
+        String dir = "/home/myflickr/photo/";
         System.out.println(name);
         System.out.println(dir);
         saveFile(photo, dir);

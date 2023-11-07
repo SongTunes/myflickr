@@ -56,6 +56,9 @@ public class Result {
         return new Result(CODE_SUCCESS, "request ok", data);
     }
 
+    public static Result success(String msg, Object data){
+        return new Result(CODE_SUCCESS, msg, data);
+    }
     public static Result error(String code, String msg) {
         return new Result(CODE_SYS_ERROR, msg, null);
     }

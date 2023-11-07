@@ -27,4 +27,5 @@ public class PhotoController {
         System.out.println(photoData);
         return Result.success(photoData);
     }
+
 }
