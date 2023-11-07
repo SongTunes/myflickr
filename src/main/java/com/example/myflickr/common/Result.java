@@ -48,6 +48,10 @@ public class Result {
         return new Result(CODE_SUCCESS, "request ok", null);
     }
 
+    public static Result success(String msg) {
+        return new Result(CODE_SUCCESS, msg, null);
+    }
+
     public static Result success(Object data) {
         return new Result(CODE_SUCCESS, "request ok", data);
     }

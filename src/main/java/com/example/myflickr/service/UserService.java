@@ -40,6 +40,9 @@ public class UserService {
         if(user.getPassword() == null || "".equals(user.getPassword())){
             user.setPassword("123");
         }
+        if(user.getRole() == null || "".equals(user.getRole())){
+            user.setRole("ROLE_USER");
+        }
         // 重复性校验
         User u = userMapper.selectByName(user.getName());
         if(u != null){
