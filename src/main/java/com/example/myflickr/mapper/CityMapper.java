@@ -1,6 +1,7 @@
 package com.example.myflickr.mapper;
 
 import com.example.myflickr.entity.City;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -14,4 +15,7 @@ public interface CityMapper {
 
     @Insert("insert into sch1.t_city (name) values #{name}")
     public int insert(City city);
+
+    @Delete("delete from sch1.t_city where id = #{id}")
+    public int deleteById(Integer id);
 }
