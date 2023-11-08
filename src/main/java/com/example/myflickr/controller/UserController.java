@@ -1,5 +1,6 @@
 package com.example.myflickr.controller;
 
+import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.example.myflickr.common.Result;
@@ -69,7 +70,7 @@ public class UserController {
     // @RequestParam(required=false)
     // 前端Get方法传token=
     @GetMapping("/export")
-    public void exportUser(HttpServletResponse response) throws IOException {
+    public Result exportUser(HttpServletResponse response) throws IOException {
         ExcelWriter writer = ExcelUtil.getWriter(true);
         List<User> list = new ArrayList<>();
         list = userService.getAllUser();
@@ -84,6 +85,22 @@ public class UserController {
         writer.close();
         outputStream.flush();
         outputStream.close();
+        return Result.success("导出成功");
+    }
+
+    @PostMapping("/import")
+    public Result importUser(MultipartFile userFile) throws IOException {
+
+        ExcelReader reader = ExcelUtil.getReader(userFile.getInputStream());
+        List<User> userList = reader.readAll(User.class);
+        // write to db
+        try{
+            userService.add(userList);
+        } catch (Exception e) {
+            return Result.error("用户表导入失败");
+        }
+
+        return Result.success("用户表导入成功");
     }
 
 

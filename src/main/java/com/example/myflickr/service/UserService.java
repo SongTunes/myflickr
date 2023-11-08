@@ -47,6 +47,27 @@ public class UserService {
     }
 
     public User signup(User user){
+        checkUser(user);
+        if(userMapper.insert(user) > 0){
+            return user;
+        }
+        return null;
+    }
+
+    public int add(User user){
+        checkUser(user);
+        return userMapper.insert(user);
+    }
+
+    public int add(List<User> userList){
+        int insertNum = 0;
+        for(User u: userList){
+            insertNum += userMapper.insert(u);
+        }
+        return insertNum;
+    }
+
+    public Boolean checkUser(User user){
         if(user.getName() == null || "".equals(user.getName())){
             throw new ServiceException("用户名不可为空");
         }
@@ -62,12 +83,10 @@ public class UserService {
             // 任何项目都要有: 全局异常处理
             throw new ServiceException("用户名已存在");
         }
-        if(userMapper.insert(user) > 0){
-            return user;
-        }
-        return null;
+        return true;
     }
 
+    // TODO: 文件上传重构到Controller层? Service层应该处理逻辑 一些基本的操作应该在Controller层
     public Photo upload(Boolean isPrivate, Integer uid, Integer cid, Date date, MultipartFile photoFile, HttpServletRequest request) {
 //        String dir = request.getServletContext().getRealPath("/upload/");
         Photo photo = new Photo(isPrivate, uid, cid, date);
