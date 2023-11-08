@@ -1,6 +1,8 @@
 package com.example.myflickr.service;
 
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.example.myflickr.entity.Photo;
 import com.example.myflickr.entity.User;
 import com.example.myflickr.exception.ServiceException;
@@ -29,7 +31,8 @@ public class UserService {
     @Autowired
     private PhotoMapper photoMapper;
 
-    public User login(User user){
+    public User login(String name, String password){
+        User user = new User(name, password);
         if(user.getName() == null || "".equals(user.getName())){
             throw new ServiceException("用户名不可为空");
         }
@@ -46,7 +49,8 @@ public class UserService {
         return u;
     }
 
-    public User signup(User user){
+    public User signup(String name, String password){
+        User user = new User(name, password);
         checkUser(user);
         if(userMapper.insert(user) > 0){
             return user;
@@ -54,15 +58,63 @@ public class UserService {
         return null;
     }
 
+    public User getUserInfo(String token){
+        String userId;
+        try {
+            userId = JWT.decode(token).getAudience().get(0);
+        } catch (JWTDecodeException j) {
+            throw new ServiceException("401", "token验证失败 请登录");
+        }
+        // 根据token中的userid查询数据库
+        User user = userMapper.selectById(Integer.valueOf(userId));
+        user.setToken(token);
+        user.setActiveCity(userMapper.selectUserActiveCity(Integer.valueOf(userId)));
+
+        return user;
+    }
+
+    public int updateUser(User user){
+        int n = 0;
+        try{
+            n = userMapper.updateById(user);
+        } catch (Exception e){
+            log.error("用户更新失败");
+            throw new ServiceException("用户更新失败");
+        }
+        return n;
+    }
+    public int deleteUserById(Integer id){
+        int n = 0;
+        try{
+            n = userMapper.deleteById(id);
+        } catch (Exception e){
+            log.error("用户删除失败");
+            throw new ServiceException("用户删除失败");
+        }
+        return n;
+    }
+
     public int add(User user){
+        int n = 0;
         checkUser(user);
-        return userMapper.insert(user);
+        try{
+            n = userMapper.insert(user);
+        } catch (Exception e){
+            log.error("用户添加失败");
+            throw new ServiceException("用户添加失败");
+        }
+        return n;
     }
 
     public int add(List<User> userList){
         int insertNum = 0;
-        for(User u: userList){
-            insertNum += userMapper.insert(u);
+        try {
+            for (User u : userList) {
+                insertNum += userMapper.insert(u);
+            }
+        } catch (Exception e){
+            log.error("用户添加失败");
+            throw new ServiceException("用户添加失败");
         }
         return insertNum;
     }

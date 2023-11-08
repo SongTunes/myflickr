@@ -4,6 +4,7 @@ import cn.hutool.core.annotation.Alias;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import javax.persistence.*;
+import java.util.List;
 
 @TableName("t_user")
 public class User {
@@ -23,6 +24,23 @@ public class User {
 
     @Transient
     private String token;
+
+    @Transient
+    private List<City> activeCity;
+
+    public User(){}
+    public User(String name, String password){
+        this.name = name;
+        this.password = password;
+    }
+
+    public List<City> getActiveCity() {
+        return activeCity;
+    }
+
+    public void setActiveCity(List<City> activeCity) {
+        this.activeCity = activeCity;
+    }
 
     public Integer getId() {
         return id;

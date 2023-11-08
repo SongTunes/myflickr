@@ -3,9 +3,12 @@ package com.example.myflickr.controller;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.example.myflickr.common.Result;
 import com.example.myflickr.entity.Photo;
 import com.example.myflickr.entity.User;
+import com.example.myflickr.exception.ServiceException;
 import com.example.myflickr.service.PhotoService;
 import com.example.myflickr.service.UserService;
 import com.example.myflickr.utils.JwtTokenUtils;
@@ -40,10 +43,24 @@ public class UserController {
     @PostMapping("/login")
     public Result login(@RequestBody User user){
         // 后端User属性定义多没关系 保证前端传来的能接收有就行
-        User u = userService.login(user);
-        System.out.println(user);
-        return Result.success(u);  // 这里返回了u则说明验证一定通过了
+        User u = userService.login(user.getName(), user.getPassword());
+        u = userService.getUserInfo(u.getToken());
+        return Result.success("登录成功", u);  // 这里返回了u则说明验证一定通过了
 
+    }
+
+    @PostMapping("/signup")
+    public Result signup(@RequestBody User user){
+        // @RequestBody需要格式为JSON
+        User u = userService.signup(user.getName(), user.getPassword());
+        return Result.success("注册成功", u);
+    }
+
+
+    @GetMapping("/info")
+    public Result getUserInfo(String token){
+        User u = userService.getUserInfo(token);
+        return Result.success(u);
     }
 
     @GetMapping("/all-user")
@@ -53,16 +70,32 @@ public class UserController {
         return Result.success(userData);
     }
 
-    @PostMapping("/signup")
-    public Result signup(@RequestBody User user){
-        // @RequestBody需要格式为JSON
-        System.out.println(user);
-        User u = userService.signup(user);
-        return Result.success(u);
+    @PostMapping("/update")
+    public Result updateUser(User user){
+        if(userService.updateUser(user) > 0){
+            return Result.success("用户更新成功");
+        }
+        return Result.error("用户更新失败");
+    }
+
+    @GetMapping("/delete")
+    public Result deleteUserById(Integer id){
+        if(userService.deleteUserById(id) > 0){
+            return Result.success("用户删除成功");
+        }
+        return Result.error("用户删除失败");
     }
 
     @PostMapping("/upload")
-    public Result upload(Boolean isPrivate, Integer uid, Integer cid, @DateTimeFormat(pattern = "MM-dd-yy") Date date, MultipartFile photoFile, HttpServletRequest request) {
+    public Result upload(
+            @RequestParam(defaultValue = "false") Boolean isPrivate,
+            @RequestParam Integer uid,
+            @RequestParam Integer cid,
+            @RequestParam @DateTimeFormat(pattern = "MM-dd-yy") Date date,
+            @RequestParam MultipartFile photoFile,
+            HttpServletRequest request
+    )
+    {
         Photo photo = userService.upload(isPrivate, uid, cid, date, photoFile, request);
         return Result.success("图片上传成功", photo);
     }
@@ -70,7 +103,7 @@ public class UserController {
     // @RequestParam(required=false)
     // 前端Get方法传token=
     @GetMapping("/export")
-    public Result exportUser(HttpServletResponse response) throws IOException {
+    public void exportUser(HttpServletResponse response) throws IOException {
         ExcelWriter writer = ExcelUtil.getWriter(true);
         List<User> list = new ArrayList<>();
         list = userService.getAllUser();
@@ -85,11 +118,11 @@ public class UserController {
         writer.close();
         outputStream.flush();
         outputStream.close();
-        return Result.success("导出成功");
+//        return Result.success("导出成功");
     }
 
     @PostMapping("/import")
-    public Result importUser(MultipartFile userFile) throws IOException {
+    public Result importUser(@RequestParam MultipartFile userFile) throws IOException {
 
         ExcelReader reader = ExcelUtil.getReader(userFile.getInputStream());
         List<User> userList = reader.readAll(User.class);
