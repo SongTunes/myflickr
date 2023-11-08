@@ -26,7 +26,7 @@ public class User {
     private String token;
 
     @Transient
-    private List<City> activeCity;
+    private List<String> activeCity;
 
     public User(){}
     public User(String name, String password){
@@ -34,11 +34,11 @@ public class User {
         this.password = password;
     }
 
-    public List<City> getActiveCity() {
+    public List<String> getActiveCity() {
         return activeCity;
     }
 
-    public void setActiveCity(List<City> activeCity) {
+    public void setActiveCity(List<String> activeCity) {
         this.activeCity = activeCity;
     }
 
@@ -107,6 +107,7 @@ public class User {
                 ", birth='" + birth + '\'' +
                 ", role='" + role + '\'' +
                 ", token='" + token + '\'' +
+                ", activeCity=" + activeCity +
                 '}';
     }
 }

@@ -139,9 +139,9 @@ public class UserService {
     }
 
     // TODO: 文件上传重构到Controller层? Service层应该处理逻辑 一些基本的操作应该在Controller层
-    public Photo upload(Boolean isPrivate, Integer uid, Integer cid, Date date, MultipartFile photoFile, HttpServletRequest request) {
+    public Photo upload(Boolean isprivate, Integer uid, Integer cid, Date date, MultipartFile photoFile, HttpServletRequest request) {
 //        String dir = request.getServletContext().getRealPath("/upload/");
-        Photo photo = new Photo(isPrivate, uid, cid, date);
+        Photo photo = new Photo(isprivate, uid, cid, date);
 
         // 1. Save file on server.
         String dir = "/home/myflickr/photo/";  // 需要路径存在

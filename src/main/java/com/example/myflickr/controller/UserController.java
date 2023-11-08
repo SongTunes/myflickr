@@ -64,14 +64,14 @@ public class UserController {
     }
 
     @GetMapping("/all-user")
-    public Result selectAll(){
+    public Result getAllUser(){
         List<User> userData = userService.getAllUser();
         System.out.println(userData);
         return Result.success(userData);
     }
 
     @PostMapping("/update")
-    public Result updateUser(User user){
+    public Result updateUser(@RequestBody User user){
         if(userService.updateUser(user) > 0){
             return Result.success("用户更新成功");
         }

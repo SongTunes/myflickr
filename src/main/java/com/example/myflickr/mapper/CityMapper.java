@@ -13,7 +13,7 @@ public interface CityMapper {
     @Select("select * from sch1.t_city")
     public List<City> selectAll();
 
-    @Insert("insert into sch1.t_city (name) values #{name}")
+    @Insert("insert into sch1.t_city (name) values (#{name})")
     public int insert(City city);
 
     @Delete("delete from sch1.t_city where id = #{id}")

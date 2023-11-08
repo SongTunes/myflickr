@@ -14,8 +14,8 @@ public class Photo {
     private Integer id;
     private Integer uid;
     private Integer cid;
-    @Column(name = "private")
-    private Boolean isPrivate;
+//    @Column(name = "private")
+    private Boolean isprivate;
     @DateTimeFormat(pattern = "MM-dd-yy")
     private Date date;
     private String path;
@@ -23,14 +23,14 @@ public class Photo {
     @Transient
     private String photoName;
 
-    @Transient
+//    @Transient
     private String url;
 
     public Photo(){
 
     }
     public Photo(Boolean isPrivate, Integer uid, Integer cid, Date date){
-        this.isPrivate = isPrivate;
+        this.isprivate = isPrivate;
         this.uid = uid;
         this.cid = cid;
         this.date = date;
@@ -68,12 +68,12 @@ public class Photo {
         this.cid = cid;
     }
 
-    public Boolean getIsPrivate() {
-        return isPrivate;
+    public Boolean getIsprivate() {
+        return isprivate;
     }
 
-    public void setIsPrivate(Boolean isPrivate) {
-        this.isPrivate = isPrivate;
+    public void setIsprivate(Boolean isPrivate) {
+        this.isprivate = isPrivate;
     }
 
     public String getPath() {
@@ -106,7 +106,7 @@ public class Photo {
                 "id=" + id +
                 ", uid=" + uid +
                 ", cid=" + cid +
-                ", isPrivate='" + isPrivate + '\'' +
+                ", isPrivate='" + isprivate + '\'' +
                 ", path='" + path + '\'' +
                 ", url='" + url + '\'' +
                 '}';
