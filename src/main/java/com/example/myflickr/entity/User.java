@@ -1,5 +1,6 @@
 package com.example.myflickr.entity;
 
+import cn.hutool.core.annotation.Alias;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import javax.persistence.*;
@@ -8,11 +9,15 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Alias("编号")
     private Integer id;
-//    @Column(name = "name")
+    @Alias("用户名")
     private String name;
+    @Alias("密码")
     private String password;
+    @Alias("性别")
     private String gender;
+    @Alias("出生日期")
     private String birth;
     private String role;
 
@@ -80,6 +85,10 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birth='" + birth + '\'' +
+                ", role='" + role + '\'' +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result error(Exception e) {
-        log.error("error: ", e);
+        log.error("Get error: ", e);
         return Result.error("error");
     }
 
