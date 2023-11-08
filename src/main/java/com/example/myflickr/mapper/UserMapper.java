@@ -24,7 +24,7 @@ public interface UserMapper {
     @Select("select * from sch1.t_user where name = #{name} and password = #{password}")
     public User selectByNameAndPassword(String name, String password);
 
-    @Select("select getUserActiveCity(#{id})")
+    @Select("call sch1.enum_user_city(#{id});")
     public List<City> selectUserActiveCity(Integer id);
 
     @Delete("delete from sch1.t_user where id = #{id}")
