@@ -29,17 +29,18 @@ public class User {
     private List<String> activeCity;
 
     public User(){}
+
     public User(String name, String password){
         this.name = name;
         this.password = password;
-    }
 
-    public List<String> getActiveCity() {
-        return activeCity;
     }
-
-    public void setActiveCity(List<String> activeCity) {
-        this.activeCity = activeCity;
+    public User(String name, String password, String gender, String birth, String role){
+        this.name = name;
+        this.password = password;
+        this.gender = gender;
+        this.birth = birth;
+        this.role = role;
     }
 
     public Integer getId() {
@@ -65,6 +66,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getGender() {
         return gender;
     }
@@ -95,6 +97,14 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public List<String> getActiveCity() {
+        return activeCity;
+    }
+
+    public void setActiveCity(List<String> activeCity) {
+        this.activeCity = activeCity;
     }
 
     @Override

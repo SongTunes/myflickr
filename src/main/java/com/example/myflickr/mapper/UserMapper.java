@@ -1,6 +1,7 @@
 package com.example.myflickr.mapper;
 
 import com.example.myflickr.entity.City;
+import com.example.myflickr.entity.Photo;
 import com.example.myflickr.entity.User;
 import org.apache.ibatis.annotations.*;
 
@@ -18,7 +19,7 @@ public interface UserMapper {
     @Select("select * from sch1.t_user where name = #{name}")
     public User selectByName(String name);  // 如果返回多条会抛出异常 会终止运行吗?
 
-    @Insert("insert into sch1.t_user (name, password) values (#{name}, #{password})")
+    @Insert("insert into sch1.t_user (name, password, gender, birth, role) values (#{name}, #{password}, #{gender}, #{birth}, #{role})")
     public int insert(User user);
 
     @Select("select * from sch1.t_user where name = #{name} and password = #{password}")
@@ -26,6 +27,9 @@ public interface UserMapper {
 
     @Select("call sch1.enum_user_city(#{id});")
     public List<String> selectUserActiveCity(Integer id);
+
+    @Select("select * from sch1.t_photo where uid = #{uid}")
+    public List<Photo> selectPhotoByUid(Integer uid);
 
     @Delete("delete from sch1.t_user where id = #{id}")
     public int deleteById(Integer id);

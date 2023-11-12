@@ -9,6 +9,8 @@ import com.example.myflickr.exception.ServiceException;
 import com.example.myflickr.mapper.PhotoMapper;
 import com.example.myflickr.mapper.UserMapper;
 import com.example.myflickr.utils.JwtTokenUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +51,8 @@ public class UserService {
         return u;
     }
 
-    public User signup(String name, String password){
-        User user = new User(name, password);
+    public User signup(String name, String password, String gender, String birth, String role){
+        User user = new User(name, password, gender, birth, role);
         checkUser(user);
         if(userMapper.insert(user) > 0){
             return user;
@@ -94,6 +96,12 @@ public class UserService {
         return n;
     }
 
+    public PageInfo<Photo> getUserPhoto(Integer uid, Integer PageNum, Integer PageSize){
+        PageHelper.startPage(PageNum, PageSize);
+        List<Photo> photos = userMapper.selectPhotoByUid(uid);
+        return PageInfo.of(photos);
+    }
+
     public int add(User user){
         int n = 0;
         checkUser(user);
@@ -110,6 +118,7 @@ public class UserService {
         int insertNum = 0;
         try {
             for (User u : userList) {
+                checkUser(u);
                 insertNum += userMapper.insert(u);
             }
         } catch (Exception e){
@@ -130,7 +139,13 @@ public class UserService {
             user.setRole("ROLE_USER");
         }
         // 重复性校验
-        User u = userMapper.selectByName(user.getName());
+        User u = userMapper.selectById(user.getId());
+        if(u != null){
+            // 任何项目都要有: 全局异常处理
+            throw new ServiceException("id已存在");
+        }
+
+        u = userMapper.selectByName(user.getName());
         if(u != null){
             // 任何项目都要有: 全局异常处理
             throw new ServiceException("用户名已存在");
@@ -184,9 +199,14 @@ public class UserService {
 
     }
 
-
     public List<User> getAllUser(){
         return userMapper.selectAll();
+    }
+
+    public PageInfo<User> getAllUserPage(Integer PageNum, Integer PageSize){
+        PageHelper.startPage(PageNum, PageSize);
+        List<User> users = userMapper.selectAll();
+        return PageInfo.of(users);
     }
     public User getUserById(Integer id){
         return userMapper.selectById(id);

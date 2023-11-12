@@ -20,11 +20,15 @@ public class PhotoService {
     @Autowired
     private PhotoMapper photoMapper;
 
-    public PageInfo<Photo> getAllPhoto(){
+    public PageInfo<Photo> getAllPhoto(Integer PageNum, Integer PageSize){
         // 开启分页查询
-        PageHelper.startPage(1, 5);
+        PageHelper.startPage(PageNum, PageSize);
         List<Photo> photos = photoMapper.selectAll();
         return PageInfo.of(photos);
+    }
+
+    public int deletePhotoById(Integer id){
+        return photoMapper.deleteById(id);
     }
 
 //    public Photo insert(Photo photo, HttpServletRequest request){

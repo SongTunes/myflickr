@@ -12,6 +12,7 @@ import com.example.myflickr.exception.ServiceException;
 import com.example.myflickr.service.PhotoService;
 import com.example.myflickr.service.UserService;
 import com.example.myflickr.utils.JwtTokenUtils;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class UserController {
     @PostMapping("/signup")
     public Result signup(@RequestBody User user){
         // @RequestBody需要格式为JSON
-        User u = userService.signup(user.getName(), user.getPassword());
+        User u = userService.signup(user.getName(), user.getPassword(), user.getGender(), user.getBirth(), user.getRole());
         return Result.success("注册成功", u);
     }
 
@@ -64,8 +65,8 @@ public class UserController {
     }
 
     @GetMapping("/all-user")
-    public Result getAllUser(){
-        List<User> userData = userService.getAllUser();
+    public Result getAllUser(Integer PageNum, Integer PageSize){
+        PageInfo<User> userData = userService.getAllUserPage(PageNum, PageSize);
         System.out.println(userData);
         return Result.success(userData);
     }
@@ -84,6 +85,12 @@ public class UserController {
             return Result.success("用户删除成功");
         }
         return Result.error("用户删除失败");
+    }
+
+    @GetMapping("/all-photo")
+    public Result getUserPhoto(Integer id, Integer PageNum, Integer PageSize){
+        PageInfo<Photo> photos = userService.getUserPhoto(id, PageNum, PageSize);
+        return Result.success(photos);
     }
 
     @PostMapping("/upload")
@@ -123,9 +130,11 @@ public class UserController {
 
     @PostMapping("/import")
     public Result importUser(@RequestParam MultipartFile userFile) throws IOException {
-
+        log.info("call importUser");
         ExcelReader reader = ExcelUtil.getReader(userFile.getInputStream());
+        log.info("reader ok");
         List<User> userList = reader.readAll(User.class);
+        log.info("userList ok");
         // write to db
         try{
             userService.add(userList);
