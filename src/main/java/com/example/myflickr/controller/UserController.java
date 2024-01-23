@@ -130,11 +130,9 @@ public class UserController {
 
     @PostMapping("/import")
     public Result importUser(@RequestParam MultipartFile userFile) throws IOException {
-        log.info("call importUser");
+
         ExcelReader reader = ExcelUtil.getReader(userFile.getInputStream());
-        log.info("reader ok");
         List<User> userList = reader.readAll(User.class);
-        log.info("userList ok");
         // write to db
         try{
             userService.add(userList);

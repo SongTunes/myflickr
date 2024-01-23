@@ -23,6 +23,11 @@ public class Photo {
     @Transient
     private String photoName;
 
+
+    private String userName;
+
+    private String cityName;
+
 //    @Transient
     private String url;
 
@@ -34,6 +39,22 @@ public class Photo {
         this.uid = uid;
         this.cid = cid;
         this.date = date;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public Date getDate() {

@@ -23,7 +23,7 @@ public class PhotoService {
     public PageInfo<Photo> getAllPhoto(Integer PageNum, Integer PageSize){
         // 开启分页查询
         PageHelper.startPage(PageNum, PageSize);
-        List<Photo> photos = photoMapper.selectAll();
+        List<Photo> photos = photoMapper.selectAllPublic();
         return PageInfo.of(photos);
     }
 

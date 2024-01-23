@@ -28,7 +28,11 @@ public interface UserMapper {
     @Select("call sch1.enum_user_city(#{id});")
     public List<String> selectUserActiveCity(Integer id);
 
-    @Select("select * from sch1.t_photo where uid = #{uid}")
+    // TODO: move to photoMapper
+//    @Select("select * from sch1.t_photo where uid = #{uid}")
+//    public List<Photo> selectPhotoByUid(Integer uid);
+
+    @Select("select sch1.t_photo.id, uid, cid, isprivate, date, path, url, sch1.t_user.name as userName, sch1.t_city.name as cityName from ((sch1.t_photo inner join sch1.t_user on sch1.t_photo.uid = sch1.t_user.id) inner join sch1.t_city on sch1.t_photo.cid = sch1.t_city.id) where uid = #{uid}")
     public List<Photo> selectPhotoByUid(Integer uid);
 
     @Delete("delete from sch1.t_user where id = #{id}")

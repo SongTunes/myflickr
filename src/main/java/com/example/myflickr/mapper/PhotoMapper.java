@@ -10,8 +10,13 @@ import java.util.List;
 
 @Mapper
 public interface PhotoMapper {
-    @Select("select * from sch1.t_photo")
+//    @Select("select * from sch1.t_photo")
+//    public List<Photo> selectAll();
+    @Select("select sch1.t_photo.id, uid, cid, isprivate, date, path, url, sch1.t_user.name as userName, sch1.t_city.name as cityName from (sch1.t_photo inner join sch1.t_user on sch1.t_photo.uid = sch1.t_user.id) inner join sch1.t_city on sch1.t_photo.cid = sch1.t_city.id")
     public List<Photo> selectAll();
+
+    @Select("select sch1.t_photo.id, uid, cid, isprivate, date, path, url, sch1.t_user.name as userName, sch1.t_city.name as cityName from ((sch1.t_photo inner join sch1.t_user on sch1.t_photo.uid = sch1.t_user.id) inner join sch1.t_city on sch1.t_photo.cid = sch1.t_city.id) where isprivate = false")
+    public List<Photo> selectAllPublic();
 
     @Select("select * from sch1.t_photo where private = 'false'")
     public List<Photo> selectPublic();
