@@ -30,20 +30,20 @@ Token (Java JWT == 4.3.0)
 
 ## 核心功能演示
 #### 注册
-<img src="https://github.com/SongTunes/myflickr/tree/main/doc/signup.gif" width="500px" >
+<img src="https://github.com/SongTunes/myflickr/tree/main/doc/signup.gif" width="480px">
 
 #### 登录
-<img src="https://github.com/SongTunes/myflickr/tree/main/doc/login.gif" width="500px" >
+<img src="https://github.com/SongTunes/myflickr/tree/main/doc/login.gif" width="480px">
 
 #### 图片浏览
-<img src="https://github.com/SongTunes/myflickr/tree/main/doc/pic_browse.gif" width="500px" >
+<img src="https://github.com/SongTunes/myflickr/tree/main/doc/pic_browse.gif" width="480px">
 
 #### 添加图片
-<img src="https://github.com/SongTunes/myflickr/tree/main/doc/add_pic.gif" width="500px" >
+<img src="https://github.com/SongTunes/myflickr/tree/main/doc/add_pic.gif" width="480px">
 
 #### 发布管理
-<img src="https://github.com/SongTunes/myflickr/tree/main/doc/submit_manage.gif" width="500px" >
+<img src="https://github.com/SongTunes/myflickr/tree/main/doc/submit_manage.gif" width="480px">
 
 #### 用户导入导出
-<img src="https://github.com/SongTunes/myflickr/tree/main/doc/import_export.gif" width="500px" >
+<img src="https://github.com/SongTunes/myflickr/tree/main/doc/import_export.gif" width="480px">
 
